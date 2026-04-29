@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR Tech & Agentic AI — The Signal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1117; --ink-mid: #3a3d4a; --ink-soft: #717585; --ink-faint: #a8aab8;
+    --surface: #f7f7f9; --surface-alt: #eeeef3; --white: #ffffff;
+    --accent: #0066cc; --accent-light: #e8f0fb; --accent-mid: #4d94e0;
+    --teal: #00897b; --teal-light: #e0f2f0;
+    --amber: #c97a00; --amber-light: #fff3e0;
+    --coral: #c94f35; --coral-light: #fdecea;
+    --green: #2e7d32; --green-light: #e8f5e9;
+    --violet: #5b21b6; --violet-light: #ede9fe;
+    --border: rgba(15,17,23,0.1); --border-strong: rgba(15,17,23,0.18);
+    --radius: 10px; --radius-sm: 6px;
+    --shadow: 0 2px 12px rgba(15,17,23,0.07), 0 1px 3px rgba(15,17,23,0.05);
+    --shadow-md: 0 4px 24px rgba(15,17,23,0.1), 0 2px 6px rgba(15,17,23,0.06);
+    --header-bg: #ffffff; --body-bg: #f7f7f9; --card-bg: #ffffff;
+  }
+
+  body.dark {
+    --ink: #eeeef3; --ink-mid: #c0c2cc; --ink-soft: #8a8c99; --ink-faint: #5a5c6e;
+    --surface: #0f1117; --surface-alt: #1a1c22; --white: #1e2028;
+    --accent: #4d94e0; --accent-light: #1a2a40; --accent-mid: #6aabf0;
+    --teal: #4db6ac; --teal-light: #0d2926;
+    --amber: #ffb74d; --amber-light: #2a1f0a;
+    --coral: #ef7b62; --coral-light: #2a1210;
+    --green: #66bb6a; --green-light: #0d2010;
+    --violet: #a78bfa; --violet-light: #2e1065;
+    --border: rgba(238,238,243,0.12); --border-strong: rgba(238,238,243,0.22);
+    --header-bg: #14161e; --body-bg: #0f1117; --card-bg: #1a1c24;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--body-bg); color: var(--ink); min-height: 100vh; font-size: 15px; line-height: 1.6; transition: background 0.2s, color 0.2s; }
+
+  /* ── HEADER ── */
+  .site-header { background: var(--header-bg); border-bottom: 1px solid var(--border); padding: 0 2rem; position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1rem; flex-wrap: wrap; }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .nav-back { font-size: 13px; color: var(--ink-soft); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color 0.12s; }
+  .nav-back:hover { color: var(--accent); }
+  .divider-v { width: 1px; height: 24px; background: var(--border-strong); }
+  .header-title h1 { font-family: 'DM Serif Display', serif; font-size: 1.1rem; font-weight: 400; color: var(--ink); line-height: 1.2; }
+  .header-title .subtitle { font-size: 11px; color: var(--ink-soft); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 1px; font-weight: 500; }
+  .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .badge { font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.04em; white-space: nowrap; }
+  .badge-violet { background: var(--violet-light); color: var(--violet); border: 1px solid rgba(91,33,182,0.15); }
+  .hdr-btn { display: flex; align-items: center; gap: 5px; font-size: 12px; padding: 5px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-strong); background: transparent; color: var(--ink-soft); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.12s; white-space: nowrap; }
+  .hdr-btn:hover { background: var(--surface-alt); color: var(--ink); }
+  .hdr-btn.copied { background: var(--green-light); color: var(--green); border-color: var(--green); }
+
+  /* ── PAGE HERO ── */
+  .page-hero { background: linear-gradient(135deg, #0f1f3d 0%, #1a2f5a 100%); padding: 3rem 2rem 2.5rem; }
+  .page-hero-inner { max-width: 1100px; margin: 0 auto; }
+  .hero-breadcrumb { font-size: 12px; color: #7a9cc8; margin-bottom: 1rem; display: flex; align-items: center; gap: 6px; }
+  .hero-breadcrumb a { color: #a8c4e8; text-decoration: none; }
+  .hero-breadcrumb a:hover { color: #ffffff; }
+  .page-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 400; color: #ffffff; line-height: 1.1; margin-bottom: 0.75rem; }
+  .page-hero h1 em { font-style: italic; color: #a8c4e8; }
+  .page-hero-desc { font-size: 15px; color: #a8c4e8; line-height: 1.75; max-width: 680px; margin-bottom: 1.5rem; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-chip { font-size: 11px; padding: 4px 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); color: #a8c4e8; }
+  .meta-chip.live { background: rgba(0,137,123,0.3); color: #80cbc4; border-color: rgba(0,137,123,0.4); }
+
+  /* ── MAIN ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 1.5rem 2rem 3rem; }
+
+  /* ── STAT STRIP ── */
+  .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; margin-bottom: 1.5rem; margin-top: 1.5rem; }
+  .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; box-shadow: var(--shadow); }
+  .stat-label { font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; margin-bottom: 6px; }
+  .stat-val { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--accent); line-height: 1; }
+  .stat-sub { font-size: 11px; color: var(--ink-faint); margin-top: 4px; }
+
+  /* ── SEARCH ── */
+  .search-wrap { margin-bottom: 1.5rem; position: relative; }
+  .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--ink-faint); pointer-events: none; }
+  #search-input { width: 100%; padding: 9px 12px 9px 34px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card-bg); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
+  #search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,102,204,0.1); }
+  #search-input::placeholder { color: var(--ink-faint); }
+  .search-results { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-md); z-index: 200; display: none; max-height: 300px; overflow-y: auto; }
+  .search-results.visible { display: block; }
+  .sr-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--border); cursor: pointer; text-decoration: none; transition: background 0.1s; }
+  .sr-item:last-child { border-bottom: none; }
+  .sr-item:hover { background: var(--surface-alt); }
+  .sr-type { font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 6px; background: var(--accent-light); color: var(--accent); white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .sr-title { font-size: 13px; color: var(--ink); line-height: 1.4; }
+  .sr-desc { font-size: 11px; color: var(--ink-faint); margin-top: 1px; }
+  .search-empty { padding: 14px; font-size: 13px; color: var(--ink-faint); text-align: center; }
+
+  /* ── TABS ── */
+  .tab-bar { display: flex; gap: 4px; margin-bottom: 1.5rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 5px; box-shadow: var(--shadow); flex-wrap: wrap; }
+  .tab-btn { padding: 7px 16px; border-radius: var(--radius-sm); border: none; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400; color: var(--ink-soft); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+  .tab-btn:hover { background: var(--surface-alt); color: var(--ink); }
+  .tab-btn.active { background: var(--ink); color: var(--white); font-weight: 500; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── GRIDS ── */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 16px; margin-bottom: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 16px; margin-bottom: 16px; }
+
+  /* ── CARDS ── */
+  .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; box-shadow: var(--shadow); }
+  .card-title { font-size: 11px; font-weight: 500; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+
+  /* ── PLATFORM CARDS ── */
+  .platform-card { background: var(--card-bg); border: 1px solid var(--border); border-left: 3px solid var(--pc-color, var(--accent)); border-radius: var(--radius); padding: 1.25rem 1.5rem; box-shadow: var(--shadow); margin-bottom: 12px; }
+  .platform-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .platform-name { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.3; }
+  .platform-badge { font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; }
+  .badge-leader { background: var(--accent-light); color: var(--accent); }
+  .badge-rising { background: var(--green-light); color: var(--green); }
+  .badge-emerging { background: var(--violet-light); color: var(--violet); }
+  .badge-watch { background: var(--amber-light); color: var(--amber); }
+  .platform-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.65; margin-bottom: 10px; }
+  .platform-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+  .platform-tag { font-size: 10px; padding: 2px 7px; border-radius: 7px; background: var(--surface-alt); color: var(--ink-soft); border: 1px solid var(--border); }
+
+  /* ── SOURCE ROWS ── */
+  .source-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .source-row:last-child { border-bottom: none; }
+  .source-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .source-info { flex: 1; min-width: 0; }
+  .source-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .source-desc { font-size: 12px; color: var(--ink-soft); margin-top: 1px; }
+  .source-name a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; transition: all 0.12s; }
+  .source-name a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  .freq-badge { font-size: 10px; font-weight: 500; padding: 3px 8px; border-radius: 10px; white-space: nowrap; flex-shrink: 0; }
+  .freq-daily { background: var(--teal-light); color: var(--teal); }
+  .freq-weekly { background: var(--accent-light); color: var(--accent); }
+  .freq-monthly { background: var(--amber-light); color: var(--amber); }
+
+  /* ── FRAMEWORK CARDS ── */
+  .framework-card { background: var(--surface-alt); border-radius: var(--radius-sm); padding: 1rem 1.25rem; margin-bottom: 10px; border-left: 3px solid var(--fw-color, var(--accent)); }
+  .framework-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 5px; }
+  .framework-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* ── PILL ── */
+  .pill { font-size: 12px; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border-strong); color: var(--ink-mid); cursor: pointer; transition: all 0.15s; text-decoration: none; display: inline-block; }
+  .pill:hover { background: var(--ink); color: var(--white); border-color: var(--ink); }
+
+  /* ── RHYTHM ── */
+  .rhythm-row { display: flex; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .rhythm-row:last-child { border-bottom: none; }
+  .rhythm-when { font-size: 11px; font-weight: 500; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; min-width: 80px; padding-top: 2px; flex-shrink: 0; }
+  .rhythm-what { font-size: 13px; color: var(--ink); line-height: 1.5; }
+  .rhythm-src { font-size: 11px; color: var(--ink-faint); margin-top: 3px; }
+
+  /* ── BRIEF LINKS ── */
+  .brief-link { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); text-decoration: none; transition: all 0.12s; }
+  .brief-link:last-child { border-bottom: none; }
+  .brief-link:hover .brief-text { color: var(--accent); }
+  .brief-text { font-size: 13px; color: var(--ink); flex: 1; line-height: 1.4; transition: color 0.12s; }
+  .brief-arrow { font-size: 13px; color: var(--ink-faint); }
+
+  /* ── LIVE FEED ── */
+  .live-feed-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; box-shadow: var(--shadow); margin-top: 16px; }
+  .feed-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+  .feed-title { font-size: 11px; font-weight: 500; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.07em; }
+  .live-dot { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--teal); font-weight: 500; }
+  .live-dot::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .feed-tabs { display: flex; gap: 4px; margin-bottom: 1rem; flex-wrap: wrap; }
+  .feed-tab { font-size: 11px; padding: 4px 10px; border-radius: 12px; border: 1px solid var(--border); background: transparent; color: var(--ink-soft); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.12s; }
+  .feed-tab.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+  .feed-tab:hover:not(.active) { background: var(--surface-alt); }
+  .feed-list { min-height: 180px; }
+  .feed-item { display: flex; flex-direction: column; gap: 3px; padding: 10px 0; border-bottom: 1px solid var(--border); text-decoration: none; transition: all 0.12s; }
+  .feed-item:last-child { border-bottom: none; }
+  .feed-item:hover .feed-item-title { color: var(--accent); }
+  .feed-item-source { font-size: 10px; font-weight: 500; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.06em; }
+  .feed-item-title { font-size: 13px; color: var(--ink); line-height: 1.4; transition: color 0.12s; }
+  .feed-item-date { font-size: 11px; color: var(--ink-faint); }
+  .feed-loading { display: flex; align-items: center; justify-content: center; height: 100px; font-size: 13px; color: var(--ink-faint); }
+  .feed-error { font-size: 12px; color: var(--ink-faint); padding: 12px 0; text-align: center; }
+  .feed-footer-note { margin-top: 10px; font-size: 11px; color: var(--ink-faint); }
+
+  /* ── REVIEWED NOTICE ── */
+  .reviewed-notice { font-size: 11px; color: var(--ink-faint); text-align: right; margin-bottom: 1rem; font-style: italic; }
+
+  /* ── FOOTER ── */
+  .site-footer { border-top: 1px solid var(--border); background: var(--header-bg); padding: 1.25rem 2rem; margin-top: 3rem; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  .footer-left { font-size: 12px; color: var(--ink-faint); }
+  .footer-right { display: flex; gap: 14px; flex-wrap: wrap; }
+  .footer-link { font-size: 12px; color: var(--ink-soft); text-decoration: none; transition: color 0.12s; }
+  .footer-link:hover { color: var(--accent); }
+
+  /* ── PRINT ── */
+  @media print {
+    .site-header, .search-wrap, .tab-bar, .live-feed-panel, .hdr-btn, .site-footer { display: none !important; }
+    .section { display: block !important; }
+    body { background: white; }
+    .card { box-shadow: none; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .main { padding: 1rem; }
+    .stat-strip { grid-template-columns: repeat(2,1fr); }
+    .tab-btn { font-size: 12px; padding: 6px 10px; }
+    .page-hero { padding: 2rem 1.25rem 1.75rem; }
+    .header-inner { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="https://agentforchange-hr-tech.github.io/the-signal" class="nav-back">← The Signal</a>
+      <div class="divider-v"></div>
+      <div class="header-title">
+        <h1>HR Tech &amp; Agentic AI</h1>
+        <div class="subtitle">The Signal · Platforms &amp; Intelligence</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span class="badge badge-violet">🤖 Flagship Domain</span>
+      <span style="font-size:11px; color:var(--ink-faint);" id="live-date"></span>
+      <button class="hdr-btn" id="share-btn" onclick="copyLink()">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="13" cy="2.5" r="1.5"/><circle cx="13" cy="13.5" r="1.5"/><circle cx="3" cy="8" r="1.5"/><line x1="4.4" y1="7.2" x2="11.6" y2="3.3"/><line x1="4.4" y1="8.8" x2="11.6" y2="12.7"/></svg>
+        Share
+      </button>
+      <button class="hdr-btn" onclick="window.print()">Print</button>
+      <button class="hdr-btn" id="dark-toggle" onclick="toggleDark()">Dark</button>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="hero-breadcrumb">
+      <a href="https://agentforchange-hr-tech.github.io/the-signal">The Signal</a>
+      <span>›</span>
+      <span>HR Tech &amp; Agentic AI</span>
+    </div>
+    <h1>Platforms, Agents &<br><em>The AI Stack</em></h1>
+    <p class="page-hero-desc">
+      The enterprise HR technology landscape is undergoing its most significant architectural shift since the move to cloud. AI agents are replacing copilots. Systems of record are becoming platforms of action. The vendors that defined HR tech for the last two decades are racing to reinvent themselves — while a new generation of AI-native entrants is building from scratch. This page tracks what's real, what's hype, and what actually matters for practitioners building the next generation of HR infrastructure.
+    </p>
+    <div class="hero-meta">
+      <span class="meta-chip live">● Live Platform Updates</span>
+      <span class="meta-chip">Updated <span id="hero-date"></span></span>
+      <span class="meta-chip">20+ Sources tracked</span>
+      <span class="meta-chip">Workday · ServiceNow · SAP · Oracle · Emerging</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <div class="reviewed-notice">Content last reviewed: <span id="reviewed-date"></span></div>
+
+  <!-- STAT STRIP -->
+  <div class="stat-strip">
+    <div class="stat-card">
+      <div class="stat-label">Bersin HR agents identified</div>
+      <div class="stat-val">100+</div>
+      <div class="stat-sub">Grouped into Superagent families</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">HR roles impacted</div>
+      <div class="stat-val">30%</div>
+      <div class="stat-sub">By agentic automation by 2027 — Bersin</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Workday Spring 2026</div>
+      <div class="stat-val">100s</div>
+      <div class="stat-sub">New AI agents and capabilities released</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">ServiceNow growth</div>
+      <div class="stat-val">20%</div>
+      <div class="stat-sub">YoY at $13.5B — agentic orchestration layer</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg enterprise apps</div>
+      <div class="stat-val">400+</div>
+      <div class="stat-sub">100+ touch employees — per Bersin research</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Novaworks seed round</div>
+      <div class="stat-val">$8M</div>
+      <div class="stat-sub">AI-native workforce OS — Mar 2026</div>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="Search platforms, frameworks, agents, sources, concepts…" oninput="runSearch(this.value)" onblur="setTimeout(()=>closeSearch(),200)">
+    <div class="search-results" id="search-results"></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('platforms', this)">Platform Landscape</button>
+    <button class="tab-btn" onclick="showTab('frameworks', this)">Frameworks</button>
+    <button class="tab-btn" onclick="showTab('sources', this)">Sources &amp; Feeds</button>
+    <button class="tab-btn" onclick="showTab('emerging', this)">Emerging Players</button>
+    <button class="tab-btn" onclick="showTab('rhythm', this)">Monitoring Rhythm</button>
+    <button class="tab-btn" onclick="showTab('leaders', this)">Key Voices</button>
+  </div>
+
+  <!-- TAB: PLATFORM LANDSCAPE -->
+  <div id="platforms" class="section active">
+    <div class="grid-2">
+      <div>
+        <div class="card-title">Established platforms — agentic strategy</div>
+
+        <div class="platform-card" style="--pc-color:var(--accent);">
+          <div class="platform-header">
+            <div class="platform-name">Workday — System of Record to Platform of Agents</div>
+            <span class="platform-badge badge-leader">Market Leader</span>
+          </div>
+          <p class="platform-desc">Workday is transforming its system of record into a platform for agents — unlocking company data, security, and business rules so agents can be designed and built with scale, security, and speed. The Spring 2026 release introduced Sana from Workday as the new unified front door, hundreds of new AI agents across HR and Finance, Workday Data Cloud, and an Agent Gateway for external agents using open standards like MCP and A2A. Workday is repositioning itself as a system of action, where AI supports outcomes, not just analysis.</p>
+          <div class="platform-meta">
+            <span class="platform-tag">Sana (front door agent)</span>
+            <span class="platform-tag">Agent Gateway</span>
+            <span class="platform-tag">MCP + A2A standards</span>
+            <span class="platform-tag">HiredScore (TA AI)</span>
+            <span class="platform-tag">Workday Data Cloud</span>
+            <span class="platform-tag">Spring 2026 release</span>
+          </div>
+        </div>
+
+        <div class="platform-card" style="--pc-color:var(--green);">
+          <div class="platform-header">
+            <div class="platform-name">ServiceNow — Agentic Orchestration Layer</div>
+            <span class="platform-badge badge-leader">Market Leader</span>
+          </div>
+          <p class="platform-desc">ServiceNow is emerging as an agentic orchestration platform for HR and enterprise work, redefining HR service delivery as a connected, automated experience. It acts as the coordination layer that sits above core systems like Workday, UKG, and SAP — making those systems work together in real time. The Agent Control Tower manages multi-agent coordination. MoveWorks acquisition brings conversational AI to ServiceNow's platform. AI agents included at no additional cost for Pro Plus and Enterprise Plus customers.</p>
+          <div class="platform-meta">
+            <span class="platform-tag">Agent Control Tower</span>
+            <span class="platform-tag">MoveWorks (acquired)</span>
+            <span class="platform-tag">HR Service Delivery</span>
+            <span class="platform-tag">Cross-system orchestration</span>
+            <span class="platform-tag">AI included — no extra cost</span>
+          </div>
+        </div>
+
+        <div class="platform-card" style="--pc-color:var(--amber);">
+          <div class="platform-header">
+            <div class="platform-name">SAP SuccessFactors — Joule Studio & Skills Intelligence</div>
+            <span class="platform-badge badge-leader">Market Leader</span>
+          </div>
+          <p class="platform-desc">SAP introduced enhancements across learning, skills intelligence, and AI-enabled HR workflows within SuccessFactors. Skills, learning, and internal mobility are now central to workforce resilience. SAP's investments support dynamic, skills-based workforce models that adapt to change. Joule Studio enables natural language agent building. SAP Business Data Cloud harmonizes real-time data across HR, finance, and operations. Strong integration with SAP S/4HANA for enterprise-wide orchestration.</p>
+          <div class="platform-meta">
+            <span class="platform-tag">Joule Studio</span>
+            <span class="platform-tag">Skills intelligence</span>
+            <span class="platform-tag">Business Data Cloud</span>
+            <span class="platform-tag">Internal mobility</span>
+            <span class="platform-tag">SAP S/4HANA integration</span>
+          </div>
+        </div>
+
+        <div class="platform-card" style="--pc-color:var(--coral);">
+          <div class="platform-header">
+            <div class="platform-name">Oracle HCM — Agent Studio & Fusion Cloud</div>
+            <span class="platform-badge badge-leader">Market Leader</span>
+          </div>
+          <p class="platform-desc">Oracle HCM Cloud continues its AI-embedded strategy across Fusion applications. Oracle Agent Studio enables custom agent development within the Oracle ecosystem. "AI included" messaging expanded across Fusion Cloud, with embedded intelligence for record-keeping, email drafting, and workforce insight delivery. Strong for large enterprises already on Oracle ERP — tight integration advantage across HR, Finance, and Supply Chain.</p>
+          <div class="platform-meta">
+            <span class="platform-tag">Oracle Agent Studio</span>
+            <span class="platform-tag">Fusion Cloud AI</span>
+            <span class="platform-tag">AI included messaging</span>
+            <span class="platform-tag">ERP-native integration</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card-title">Platform selection framework</div>
+        <div class="card" style="margin-bottom:12px;">
+          <div class="card-title">Key evaluation dimensions</div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">Agent depth</div>
+            <div><div class="rhythm-what">Can agents execute work end-to-end, or just surface recommendations? True agentic capability requires bidirectional system access, not just read.</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">Orchestration</div>
+            <div><div class="rhythm-what">Can the platform coordinate agents across multiple systems (HRIS, ATS, LMS, payroll)? Cross-system orchestration is the key differentiator in 2026.</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">Governance</div>
+            <div><div class="rhythm-what">Does every agentic action generate an audit trail? Human-override capability? Guardrails that enforce company rules — not just suggest them?</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">Context layer</div>
+            <div><div class="rhythm-what">Does the platform have a semantic layer — company policies, career frameworks, org structure — that agents can tap? Context is what creates value.</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">Open standards</div>
+            <div><div class="rhythm-what">MCP (Model Context Protocol) and A2A support enables interoperability with external agents. Vendor lock-in risk is highest when these are absent.</div></div>
+          </div>
+          <div class="rhythm-row" style="border-bottom:none;">
+            <div class="rhythm-when">Pricing model</div>
+            <div><div class="rhythm-what">AI included vs. AI à la carte. ServiceNow's "included" model is raising the bar. Consumption pricing adds unpredictability at scale.</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Analyst perspectives worth reading</div>
+          <a class="brief-link" href="https://joshbersin.com/2026/04/the-reinvention-of-workday-from-system-of-record-to-platform-of-agents/" target="_blank">
+            <span class="brief-text">Bersin: The Reinvention of Workday — System of Record to Platform of Agents</span><span class="brief-arrow">→</span>
+          </a>
+          <a class="brief-link" href="https://joshbersin.com/2026/04/introducing-hr-2030-a-vision-for-agentic-human-resources/" target="_blank">
+            <span class="brief-text">Bersin: Introducing HR 2030 — A Vision for Agentic Human Resources</span><span class="brief-arrow">→</span>
+          </a>
+          <a class="brief-link" href="https://www.aptituderesearch.com/top-10-hr-tech-announcements-of-the-year-whats-reshaping-hr-in-2025-2026/" target="_blank">
+            <span class="brief-text">Aptitude Research: Top 10 HR Tech Announcements — 2025–2026</span><span class="brief-arrow">→</span>
+          </a>
+          <a class="brief-link" href="https://joshbersin.com/2026/03/gloat-enters-the-crowded-war-for-ai-agents-in-hr/" target="_blank">
+            <span class="brief-text">Bersin: Gloat and the War for AI Agents in HR</span><span class="brief-arrow">→</span>
+          </a>
+          <a class="brief-link" href="https://blog.workday.com/en-us/workday-delivers-next-wave-agentic-ai-power-new-work-day.html" target="_blank">
+            <span class="brief-text">Workday: Next Wave of Agentic AI — Spring 2026 Release</span><span class="brief-arrow">→</span>
+          </a>
+          <a class="brief-link" href="https://getgalileo.ai" target="_blank">
+            <span class="brief-text">Galileo by Bersin — AI-native HR research assistant</span><span class="brief-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: FRAMEWORKS -->
+  <div id="frameworks" class="section">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">The Bersin 5-Layer Agent Architecture</div>
+        <div class="framework-card" style="--fw-color:var(--ink-faint);">
+          <div class="framework-name">Layer 1 — Systems of Record</div>
+          <div class="framework-desc">Workday, SAP, Oracle, UKG. The foundational data layer — employee records, org structure, payroll, benefits. The "rails" that give agents context and authority to act.</div>
+        </div>
+        <div class="framework-card" style="--fw-color:var(--ink-soft);">
+          <div class="framework-name">Layer 2 — Workflow & Experience</div>
+          <div class="framework-desc">ServiceNow, Microsoft Viva, internal portals. Cross-system coordination — making disparate systems work together. The orchestration layer that connects what lives above and below.</div>
+        </div>
+        <div class="framework-card" style="--fw-color:var(--accent-mid);">
+          <div class="framework-name">Layer 3 — Individual Agents</div>
+          <div class="framework-desc">Functional AI agents that maintain intelligence and act on your behalf. Recruiting agent, onboarding agent, benefits agent, performance agent. Each executes a specific domain end-to-end.</div>
+        </div>
+        <div class="framework-card" style="--fw-color:var(--accent);">
+          <div class="framework-name">Layer 4 — Superagents</div>
+          <div class="framework-desc">AI systems that stitch together multiple functional agents to manage entire HR processes. A Talent Superagent might coordinate recruiting, onboarding, and L&D agents in sequence — no human handoffs.</div>
+        </div>
+        <div class="framework-card" style="--fw-color:var(--violet);">
+          <div class="framework-name">Layer 5 — Agent Platforms & Studios</div>
+          <div class="framework-desc">Galileo (Bersin), Microsoft Copilot Studio, Oracle Agent Studio, SAP Joule Studio, Sana (Workday). The development and management environments where agents are built, deployed, and governed.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-title">Core concepts every practitioner needs to know</div>
+          <div class="framework-card" style="--fw-color:var(--accent);">
+            <div class="framework-name">Agentic AI vs. Copilot AI</div>
+            <div class="framework-desc">A copilot assists humans — it surfaces suggestions and waits for approval. An agent acts autonomously — it executes multi-step workflows, coordinates across systems, and completes tasks end-to-end. The distinction matters enormously for how you design processes and governance.</div>
+          </div>
+          <div class="framework-card" style="--fw-color:var(--teal);">
+            <div class="framework-name">Systemic HR</div>
+            <div class="framework-desc">Bersin's foundational model for 2026. HR as an integrated operation — not siloed Centers of Excellence. Talent acquisition, L&D, performance, and compensation connected through shared data and agent infrastructure rather than separate tools and teams.</div>
+          </div>
+          <div class="framework-card" style="--fw-color:var(--green);">
+            <div class="framework-name">Superworker</div>
+            <div class="framework-desc">The human + AI collaboration model where individuals are augmented by agents to perform at dramatically higher levels. A recruiter with a sourcing agent, screening agent, and scheduling agent isn't one person — they're effectively a team.</div>
+          </div>
+          <div class="framework-card" style="--fw-color:var(--amber);">
+            <div class="framework-name">MCP — Model Context Protocol</div>
+            <div class="framework-desc">Open standard for agent interoperability — enables AI agents from different vendors to share context and work together. Workday's Agent Gateway and ServiceNow both support MCP. Increasingly a procurement requirement for enterprise HR platforms.</div>
+          </div>
+          <div class="framework-card" style="--fw-color:var(--coral);">
+            <div class="framework-name">Semantic Layer / Context Engineering</div>
+            <div class="framework-desc">"Everyone is ignoring the big boring problem of bad context." Context is what creates value — if we can't trust the content, we can't trust the agent. The semantic layer maintains company policies, career frameworks, and org rules that agents reference to make accurate decisions.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">HR 2030 vision — Bersin's 8 principles</div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">1</div>
+            <div><div class="rhythm-what">AI agents will have comprehensive employee data — roles, skills, history, salary, credentials, preferences</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">2</div>
+            <div><div class="rhythm-what">Agents will also have external data — pay benchmarks, skills trends, competitor salaries, regulatory updates</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">3</div>
+            <div><div class="rhythm-what">Recruiting agents will find candidates, compare internal vs. external, and rebalance resources with precision</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">4</div>
+            <div><div class="rhythm-what">Onboarding will be fully automated — provisioning, training, culture immersion, manager check-ins</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">5</div>
+            <div><div class="rhythm-what">Performance coaching will be continuous and AI-generated — not annual cycles driven by manager memory</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">6</div>
+            <div><div class="rhythm-what">Compensation will be dynamically modeled against market data — agents flag pay equity issues before they escalate</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">7</div>
+            <div><div class="rhythm-what">Business performance issues will trigger HR agents — people-related root causes surfaced alongside financial metrics</div></div>
+          </div>
+          <div class="rhythm-row" style="border-bottom:none;">
+            <div class="rhythm-when">8</div>
+            <div><div class="rhythm-what">Career growth and upskilling will be dynamic — each employee gets an AI-generated personal development plan aligned to company needs</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: SOURCES & FEEDS -->
+  <div id="sources" class="section">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Analysts & researchers — weekly</div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--coral-light);">🔬</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://joshbersin.com" target="_blank">Josh Bersin Company</a></div>
+            <div class="source-desc">The definitive HR AI research source — Systemic HR, Superagents, HR 2030</div>
+          </div>
+          <span class="freq-badge freq-weekly">Weekly</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--green-light);">📊</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://aptituderesearch.com" target="_blank">Aptitude Research</a></div>
+            <div class="source-desc">Boutique HR tech analyst — platform deep dives and buyer research</div>
+          </div>
+          <span class="freq-badge freq-weekly">Weekly</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--accent-light);">🏢</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.gartner.com/en/human-resources" target="_blank">Gartner HR</a></div>
+            <div class="source-desc">HCM hype cycle, platform comparisons, adoption curve analysis</div>
+          </div>
+          <span class="freq-badge freq-monthly">Quarterly</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--violet-light);">🌊</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.forrester.com/research/hr-technology/" target="_blank">Forrester — HR Tech</a></div>
+            <div class="source-desc">Forrester Wave vendor evaluations and AI governance frameworks</div>
+          </div>
+          <span class="freq-badge freq-monthly">Quarterly</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--teal-light);">📈</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://redthreadresearch.com" target="_blank">RedThread Research</a></div>
+            <div class="source-desc">Stacia Garr — people analytics and L&D technology research</div>
+          </div>
+          <span class="freq-badge freq-weekly">Weekly</span>
+        </div>
+        <div style="margin-top:1rem;">
+          <a href="https://joshbersin.com" target="_blank" class="pill">Josh Bersin →</a>
+          <a href="https://getgalileo.ai" target="_blank" class="pill" style="margin-top:6px;">Galileo AI →</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Platform blogs — ongoing</div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--accent-light);">☁️</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://blog.workday.com" target="_blank">Workday Blog</a></div>
+            <div class="source-desc">Agent releases, Sana updates, Data Cloud developments</div>
+          </div>
+          <span class="freq-badge freq-weekly">Weekly</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--green-light);">⚙️</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.servicenow.com/blogs.html" target="_blank">ServiceNow Now Blog</a></div>
+            <div class="source-desc">Agentic orchestration, Agent Control Tower, MoveWorks integration</div>
+          </div>
+          <span class="freq-badge freq-weekly">Weekly</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--amber-light);">🌐</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.sap.com/blogs/topics/sap-successfactors" target="_blank">SAP SuccessFactors Blog</a></div>
+            <div class="source-desc">Joule Studio updates, skills intelligence, SuccessFactors AI releases</div>
+          </div>
+          <span class="freq-badge freq-weekly">Weekly</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--teal-light);">🤖</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://newsroom.workday.com" target="_blank">Workday Newsroom</a></div>
+            <div class="source-desc">Acquisition announcements, strategic partnerships, investor news</div>
+          </div>
+          <span class="freq-badge freq-weekly">Weekly</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--violet-light);">📰</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.hrdive.com/topic/hr-technology/" target="_blank">HR Dive — Technology</a></div>
+            <div class="source-desc">Breaking HR tech news, platform announcements, market moves</div>
+          </div>
+          <span class="freq-badge freq-daily">Daily</span>
+        </div>
+        <div style="margin-top:1rem;">
+          <a href="https://blog.workday.com" target="_blank" class="pill">Workday Blog →</a>
+          <a href="https://www.hrdive.com/topic/hr-technology/" target="_blank" class="pill" style="margin-top:6px;">HR Dive Tech →</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Newsletters & dailies</div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--teal-light);">☕</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.morningbrew.com/hr" target="_blank">HR Brew</a></div>
+            <div class="source-desc">Morning Brew's HR vertical — platform news, vendor moves, practitioner takes</div>
+          </div>
+          <span class="freq-badge freq-daily">Daily</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--amber-light);">🧠</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.theneurondaily.com" target="_blank">The Neuron</a></div>
+            <div class="source-desc">Agentic AI news with enterprise focus — model releases, agent launches</div>
+          </div>
+          <span class="freq-badge freq-daily">Daily</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--coral-light);">🍞</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://bensbites.com" target="_blank">Ben's Bites</a></div>
+            <div class="source-desc">AI product launches, enterprise use cases, funding news</div>
+          </div>
+          <span class="freq-badge freq-daily">Daily</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--accent-light);">⚡</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://tldr.tech/ai" target="_blank">TLDR AI</a></div>
+            <div class="source-desc">Fast AI digest — model releases, agentic AI developments</div>
+          </div>
+          <span class="freq-badge freq-daily">Daily</span>
+        </div>
+        <div style="margin-top:1rem;">
+          <a href="https://www.morningbrew.com/hr" target="_blank" class="pill">HR Brew →</a>
+          <a href="https://bensbites.com" target="_blank" class="pill" style="margin-top:6px;">Ben's Bites →</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Podcasts — commute-worthy</div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--coral-light);">🎙️</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://joshbersin.com/podcast/" target="_blank">Josh Bersin Company Podcast</a></div>
+            <div class="source-desc">Platform analysis, agentic AI, HR strategy — the essential listen</div>
+          </div>
+          <span class="freq-badge freq-weekly">Weekly</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--accent-light);">🎧</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://hrleaders.co/podcast" target="_blank">HR Leaders Podcast</a></div>
+            <div class="source-desc">CHRO and HR executive interviews — grounded practitioner perspective</div>
+          </div>
+          <span class="freq-badge freq-weekly">Weekly</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--amber-light);">🤖</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://emerj.com/ai-podcast-transcripts/" target="_blank">AI in Business (Emerj)</a></div>
+            <div class="source-desc">Agentic AI context beyond HR — enterprise AI strategy</div>
+          </div>
+          <span class="freq-badge freq-weekly">Weekly</span>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--green-light);">🔄</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.ardentpartners.com/future-of-work-exchange-podcast/" target="_blank">Future of Work Exchange</a></div>
+            <div class="source-desc">Workforce tech, AI automation, contingent workforce</div>
+          </div>
+          <span class="freq-badge freq-weekly">Weekly</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE RSS FEED -->
+    <div class="live-feed-panel" id="rss-panel">
+      <div class="feed-header">
+        <span class="feed-title">Live Headlines — HR Tech &amp; Agentic AI</span>
+        <span class="live-dot">Live</span>
+      </div>
+      <div class="feed-tabs">
+        <button class="feed-tab active" onclick="loadFeed('bersin', this)">Josh Bersin</button>
+        <button class="feed-tab" onclick="loadFeed('aptitude', this)">Aptitude Research</button>
+        <button class="feed-tab" onclick="loadFeed('workday', this)">Workday Blog</button>
+        <button class="feed-tab" onclick="loadFeed('servicenow', this)">ServiceNow</button>
+        <button class="feed-tab" onclick="loadFeed('hrdive_tech', this)">HR Dive Tech</button>
+        <button class="feed-tab" onclick="loadFeed('emerj', this)">Emerj AI</button>
+      </div>
+      <div class="feed-list" id="feed-list"><div class="feed-loading">Loading latest headlines…</div></div>
+      <div class="feed-footer-note">Live feeds refresh on every page visit · Click any headline to read the full article</div>
+    </div>
+  </div>
+
+  <!-- TAB: EMERGING PLAYERS -->
+  <div id="emerging" class="section">
+    <div class="grid-2">
+      <div>
+        <div class="card-title">Emerging & AI-native HR platforms</div>
+
+        <div class="platform-card" style="--pc-color:var(--violet);">
+          <div class="platform-header">
+            <div class="platform-name">Novaworks — AI-Native Workforce OS</div>
+            <span class="platform-badge badge-emerging">Watch — Mar 2026</span>
+          </div>
+          <p class="platform-desc">Novaworks raised an $8M seed round in March 2026, co-invested by ServiceNow Ventures. Positioned as the first AI-native agentic operating system for Total Workforce Management, built directly on ServiceNow's enterprise AI platform — covering employees, contractors, and AI agents in one unified system. Co-founded by veterans of Hitch Works (acquired by ServiceNow). The only platform built from the ground up to manage AI agents as first-class workforce members.</p>
+          <div class="platform-meta">
+            <span class="platform-tag">$8M seed — Mar 2026</span>
+            <span class="platform-tag">ServiceNow Ventures</span>
+            <span class="platform-tag">Total Workforce Management</span>
+            <span class="platform-tag">AI agents as workers</span>
+          </div>
+        </div>
+
+        <div class="platform-card" style="--pc-color:var(--teal);">
+          <div class="platform-header">
+            <div class="platform-name">Visier — Analytic AI Agent Platform</div>
+            <span class="platform-badge badge-rising">Rising</span>
+          </div>
+          <p class="platform-desc">Visier launched its Analytic AI Agent Platform — a first-of-its-kind solution enabling HR and IT teams to create and deploy AI agents that analyze and act on people and work data. In November 2025, Visier also introduced Visier MCP to deliver governed people data into agentic workflows across enterprise systems. Moving beyond traditional people analytics toward agentic workforce intelligence.</p>
+          <div class="platform-meta">
+            <span class="platform-tag">Analytic AI Agents</span>
+            <span class="platform-tag">Visier MCP</span>
+            <span class="platform-tag">People data governance</span>
+            <span class="platform-tag">Workforce intelligence</span>
+          </div>
+        </div>
+
+        <div class="platform-card" style="--pc-color:var(--green);">
+          <div class="platform-header">
+            <div class="platform-name">Gloat — Skills Intelligence & Agent Platform</div>
+            <span class="platform-badge badge-rising">Rising</span>
+          </div>
+          <p class="platform-desc">Gloat is building an agent development platform for HR that competes directly with Workday's Sana, ServiceNow's agent tools, and Oracle Agent Studio. Positioned as "systems of context" — the semantic layer that maintains skills frameworks, career paths, and org knowledge that agents need to make accurate decisions. Strong for internal talent marketplace and skills-based workforce transformation.</p>
+          <div class="platform-meta">
+            <span class="platform-tag">Skills intelligence</span>
+            <span class="platform-tag">Internal talent marketplace</span>
+            <span class="platform-tag">Agent development platform</span>
+            <span class="platform-tag">Context layer</span>
+          </div>
+        </div>
+
+        <div class="platform-card" style="--pc-color:var(--accent);">
+          <div class="platform-header">
+            <div class="platform-name">HiredScore (Workday) — TA AI</div>
+            <span class="platform-badge badge-leader">Acquired — Workday</span>
+          </div>
+          <p class="platform-desc">AI-powered talent acquisition intelligence, now part of Workday's agentic HR stack. Applies AI to candidate scoring, diversity pipeline analysis, and recruiter productivity — integrated directly into Workday Recruiting. One of Workday's ~$3B in strategic acquisitions building out its agent ecosystem alongside Evisort, Paradox, and Sana.</p>
+          <div class="platform-meta">
+            <span class="platform-tag">Workday acquired</span>
+            <span class="platform-tag">Candidate scoring AI</span>
+            <span class="platform-tag">Diversity analytics</span>
+            <span class="platform-tag">Recruiter productivity</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-title">AI studio landscape — who builds agents where</div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">Workday</div>
+            <div><div class="rhythm-what" style="font-weight:500;">Sana from Workday</div><div class="rhythm-src">Front door + agent development studio + learning surface. Default for all Workday customers.</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">ServiceNow</div>
+            <div><div class="rhythm-what" style="font-weight:500;">Agent Control Tower + MoveWorks</div><div class="rhythm-src">Multi-agent orchestration across enterprise functions. Conversational AI via MoveWorks.</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">SAP</div>
+            <div><div class="rhythm-what" style="font-weight:500;">Joule Studio</div><div class="rhythm-src">Natural language agent building within SAP ecosystem. Tight SuccessFactors + S/4HANA integration.</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">Oracle</div>
+            <div><div class="rhythm-what" style="font-weight:500;">Oracle Agent Studio</div><div class="rhythm-src">Custom agent development within Oracle Fusion Cloud. ERP-native integration advantage.</div></div>
+          </div>
+          <div class="rhythm-row">
+            <div class="rhythm-when">Microsoft</div>
+            <div><div class="rhythm-what" style="font-weight:500;">Copilot Studio + Agent 365</div><div class="rhythm-src">Cross-platform agent building. Competes with all HCM vendors as a horizontal layer.</div></div>
+          </div>
+          <div class="rhythm-row" style="border-bottom:none;">
+            <div class="rhythm-when">Bersin</div>
+            <div><div class="rhythm-what" style="font-weight:500;">Galileo</div><div class="rhythm-src">AI agent trained on HR research. Gives HR leaders an interactive way to explore frameworks, ask strategy questions, and access analyst intelligence.</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Funding & market signals — 2025–2026</div>
+          <a class="brief-link" href="https://joshbersin.com" target="_blank">
+            <span class="brief-text">Bersin research: Workday acquires HiredScore, Evisort, Paradox, Sana — ~$3B in AI stack building</span><span class="brief-arrow">→</span>
+          </a>
+          <a class="brief-link" href="https://bayelsawatch.com/novaworks-secures-8m/" target="_blank">
+            <span class="brief-text">Novaworks $8M seed — ServiceNow Ventures co-invests in AI-native TWM OS</span><span class="brief-arrow">→</span>
+          </a>
+          <a class="brief-link" href="https://www.aptituderesearch.com" target="_blank">
+            <span class="brief-text">Aptitude: Phenom, Eightfold, Findem competing on AI talent intelligence</span><span class="brief-arrow">→</span>
+          </a>
+          <a class="brief-link" href="https://futurumgroup.com/insights/was-2025-really-the-year-of-agentic-ai-or-just-more-agentic-hype/" target="_blank">
+            <span class="brief-text">Futurum: Was 2025 the year of agentic AI, or just hype? (Quarter-by-quarter review)</span><span class="brief-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: MONITORING RHYTHM -->
+  <div id="rhythm" class="section">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Daily — 5 to 10 min</div>
+        <div class="rhythm-row">
+          <div class="rhythm-when">Morning</div>
+          <div class="rhythm-body">
+            <div class="rhythm-what">Scan HR Brew + The Neuron for platform announcements and agentic AI launches</div>
+            <div class="rhythm-src">morningbrew.com/hr · theneurondaily.com</div>
+          </div>
+        </div>
+        <div class="rhythm-row">
+          <div class="rhythm-when">Anytime</div>
+          <div class="rhythm-body">
+            <div class="rhythm-what">Ben's Bites for AI product launches with enterprise HR relevance</div>
+            <div class="rhythm-src">bensbites.com</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Weekly — 30 to 45 min</div>
+        <div class="rhythm-row">
+          <div class="rhythm-when">Mon–Tue</div>
+          <div class="rhythm-body">
+            <div class="rhythm-what">Read one Josh Bersin post or Aptitude Research brief — this is the highest-value 30 minutes in HR tech</div>
+            <div class="rhythm-src">joshbersin.com · aptituderesearch.com</div>
+          </div>
+        </div>
+        <div class="rhythm-row">
+          <div class="rhythm-when">Commute</div>
+          <div class="rhythm-body">
+            <div class="rhythm-what">Bersin podcast or Emerj AI in Business — one episode maximum, apply directly to a current challenge</div>
+            <div class="rhythm-src">joshbersin.com/podcast · emerj.com</div>
+          </div>
+        </div>
+        <div class="rhythm-row">
+          <div class="rhythm-when">Friday</div>
+          <div class="rhythm-body">
+            <div class="rhythm-what">LinkedIn scan — Bersin, Enderes, Garr, Laurano posts. Note any vendor announcements worth tracking</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Monthly — 1 to 2 hours</div>
+        <div class="rhythm-row">
+          <div class="rhythm-when">Week 1</div>
+          <div class="rhythm-body">
+            <div class="rhythm-what">Review Workday and ServiceNow release notes — focus on new agent capabilities and API changes</div>
+            <div class="rhythm-src">blog.workday.com · servicenow.com/blogs</div>
+          </div>
+        </div>
+        <div class="rhythm-row">
+          <div class="rhythm-when">Week 2</div>
+          <div class="rhythm-body">
+            <div class="rhythm-what">Check SAP SuccessFactors and Oracle HCM blogs for AI feature releases</div>
+          </div>
+        </div>
+        <div class="rhythm-row">
+          <div class="rhythm-when">Week 3</div>
+          <div class="rhythm-body">
+            <div class="rhythm-what">One Gartner or Forrester brief — focus on platform evaluation criteria and hype cycle position</div>
+          </div>
+        </div>
+        <div class="rhythm-row">
+          <div class="rhythm-when">Week 4</div>
+          <div class="rhythm-body">
+            <div class="rhythm-what">Funding and M&A scan — new entrants and strategic acquisitions reshape the landscape faster than feature releases</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Quarterly</div>
+        <div class="rhythm-row">
+          <div class="rhythm-when">Q2 2026</div>
+          <div class="rhythm-body">
+            <div class="rhythm-what">Irresistible 2026 — Jun 8–10, USC Marshall, LA. 20+ platform vendors presenting agentic HR demonstrations</div>
+            <div class="rhythm-src">uscmarshallexeced.org/Irresistible2026</div>
+          </div>
+        </div>
+        <div class="rhythm-row">
+          <div class="rhythm-when">Q3 2026</div>
+          <div class="rhythm-body">
+            <div class="rhythm-what">HR Tech Conference — Oct 2026, Las Vegas. Largest HR tech expo — see every major platform in one room</div>
+          </div>
+        </div>
+        <div class="rhythm-row">
+          <div class="rhythm-when">Ongoing</div>
+          <div class="rhythm-body">
+            <div class="rhythm-what">Use Galileo by Bersin for on-demand scenario planning — ask it how specific platforms compare on any dimension</div>
+            <div class="rhythm-src">getgalileo.ai</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: KEY VOICES -->
+  <div id="leaders" class="section">
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Analysts to follow</div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--coral-light); font-size:12px; font-weight:500; color:var(--coral);">JB</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.linkedin.com/in/joshbersin/" target="_blank">Josh Bersin</a></div>
+            <div class="source-desc">CEO, Josh Bersin Company — the most-cited voice in HR tech globally</div>
+          </div>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--accent-light); font-size:12px; font-weight:500; color:var(--accent);">KE</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.linkedin.com/in/kathienderes/" target="_blank">Kathi Enderes</a></div>
+            <div class="source-desc">Global Industry Analyst, Josh Bersin Company — Systemic HR and AI</div>
+          </div>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--green-light); font-size:12px; font-weight:500; color:var(--green);">ML</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.linkedin.com/in/madelinelaurano/" target="_blank">Madeline Laurano</a></div>
+            <div class="source-desc">Founder, Aptitude Research — HR tech platform evaluations</div>
+          </div>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--teal-light); font-size:12px; font-weight:500; color:var(--teal);">SG</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.linkedin.com/in/staciagarr/" target="_blank">Stacia Garr</a></div>
+            <div class="source-desc">Co-founder, RedThread Research — people analytics and L&D tech</div>
+          </div>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--violet-light); font-size:12px; font-weight:500; color:var(--violet);">DU</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.linkedin.com/in/daveulrich/" target="_blank">Dave Ulrich</a></div>
+            <div class="source-desc">Rensis Likert Professor — HR leadership and organizational capability</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Platform voices worth tracking</div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--accent-light);">☁️</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://newsroom.workday.com" target="_blank">Workday Newsroom</a></div>
+            <div class="source-desc">Agent strategy, acquisitions, and product roadmap announcements</div>
+          </div>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--green-light);">⚙️</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://www.servicenow.com/blogs.html" target="_blank">ServiceNow Blog</a></div>
+            <div class="source-desc">Agentic orchestration, Agent Control Tower, enterprise AI</div>
+          </div>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--violet-light);">🔬</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://getgalileo.ai" target="_blank">Galileo by Bersin</a></div>
+            <div class="source-desc">AI-native HR research platform — interactive analyst intelligence</div>
+          </div>
+        </div>
+        <div class="source-row">
+          <div class="source-icon" style="background:var(--amber-light);">🌐</div>
+          <div class="source-info">
+            <div class="source-name"><a href="https://techcommunity.microsoft.com/category/viva" target="_blank">Microsoft Viva Blog</a></div>
+            <div class="source-desc">Copilot for HR, Agent 365, Microsoft Viva updates</div>
+          </div>
+        </div>
+        <div style="margin-top:1rem;">
+          <a href="https://getgalileo.ai" target="_blank" class="pill">Explore Galileo →</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Glossary — terms to know</div>
+        <div class="rhythm-row" style="padding:8px 0;">
+          <div><div class="rhythm-what" style="font-weight:500;">HCM</div><div class="rhythm-src">Human Capital Management — the category of enterprise software covering core HR, payroll, benefits, talent management.</div></div>
+        </div>
+        <div class="rhythm-row" style="padding:8px 0;">
+          <div><div class="rhythm-what" style="font-weight:500;">HRIS</div><div class="rhythm-src">Human Resource Information System — the system of record for employee data. Often used interchangeably with HCM.</div></div>
+        </div>
+        <div class="rhythm-row" style="padding:8px 0;">
+          <div><div class="rhythm-what" style="font-weight:500;">ATS</div><div class="rhythm-src">Applicant Tracking System — manages recruiting workflows from requisition to offer. Workday Recruiting, Greenhouse, Lever, iCIMS.</div></div>
+        </div>
+        <div class="rhythm-row" style="padding:8px 0;">
+          <div><div class="rhythm-what" style="font-weight:500;">LXP</div><div class="rhythm-src">Learning Experience Platform — AI-personalized learning delivery. Sana (Workday), Cornerstone, Degreed.</div></div>
+        </div>
+        <div class="rhythm-row" style="padding:8px 0;">
+          <div><div class="rhythm-what" style="font-weight:500;">MCP</div><div class="rhythm-src">Model Context Protocol — open standard for agent interoperability across vendor systems.</div></div>
+        </div>
+        <div class="rhythm-row" style="padding:8px 0; border-bottom:none;">
+          <div><div class="rhythm-what" style="font-weight:500;">RAG</div><div class="rhythm-src">Retrieval Augmented Generation — technique that grounds AI outputs in company-specific data, reducing hallucinations in enterprise HR agents.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">The Signal · HR Tech &amp; Agentic AI · <span id="footer-date"></span></div>
+    <div class="footer-right">
+      <a href="https://agentforchange-hr-tech.github.io/the-signal" class="footer-link">← Back to The Signal</a>
+      <a href="https://agentforchange-hr-tech.github.io/agentforchange-risk/" class="footer-link">Risk &amp; Compliance →</a>
+      <a href="https://agentforchange-hr-tech.github.io/hr-tech-intel/" class="footer-link">Talent Acquisition →</a>
+      <a href="https://www.linkedin.com/in/alexrivera1/" target="_blank" class="footer-link">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── DATES ── */
+  const now = new Date();
+  const full = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const short = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  document.getElementById('live-date').textContent = 'Updated ' + full;
+  document.getElementById('footer-date').textContent = full;
+  document.getElementById('hero-date').textContent = short;
+  document.getElementById('reviewed-date').textContent = short;
+
+  /* ── DARK MODE ── */
+  function toggleDark() {
+    const isDark = document.body.classList.toggle('dark');
+    document.getElementById('dark-toggle').textContent = isDark ? 'Light' : 'Dark';
+    localStorage.setItem('signal-hrtech-theme', isDark ? 'dark' : 'light');
+  }
+  if (localStorage.getItem('signal-hrtech-theme') === 'dark') {
+    document.body.classList.add('dark');
+    document.getElementById('dark-toggle').textContent = 'Light';
+  }
+
+  /* ── SHARE ── */
+  function copyLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const btn = document.getElementById('share-btn');
+      btn.classList.add('copied'); btn.textContent = 'Copied!';
+      setTimeout(() => { btn.classList.remove('copied'); btn.textContent = 'Share'; }, 2000);
+    });
+  }
+
+  /* ── TABS ── */
+  function showTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  /* ── SEARCH ── */
+  const SEARCH_INDEX = [
+    { title: 'Workday', desc: 'System of record to platform of agents — Sana, HiredScore, Agent Gateway', type: 'Platform', url: 'https://blog.workday.com' },
+    { title: 'ServiceNow', desc: 'Agentic orchestration layer — Agent Control Tower, MoveWorks', type: 'Platform', url: 'https://www.servicenow.com/blogs.html' },
+    { title: 'SAP SuccessFactors', desc: 'Joule Studio, skills intelligence, SuccessFactors AI', type: 'Platform', url: 'https://www.sap.com/blogs/topics/sap-successfactors' },
+    { title: 'Oracle HCM', desc: 'Oracle Agent Studio, Fusion Cloud AI, AI included', type: 'Platform', url: null },
+    { title: 'Novaworks', desc: 'AI-native workforce OS — $8M seed, ServiceNow Ventures, Mar 2026', type: 'Emerging', url: null },
+    { title: 'Visier', desc: 'Analytic AI Agent Platform — people data and workforce intelligence', type: 'Emerging', url: null },
+    { title: 'Gloat', desc: 'Skills intelligence, internal talent marketplace, agent platform', type: 'Emerging', url: null },
+    { title: 'HiredScore', desc: 'TA AI — acquired by Workday, candidate scoring and diversity analytics', type: 'Platform', url: null },
+    { title: 'Galileo', desc: 'Bersin AI-native HR research platform', type: 'Tool', url: 'https://getgalileo.ai' },
+    { title: 'Sana', desc: 'Workday front door agent and learning platform — acquired by Workday', type: 'Platform', url: null },
+    { title: 'Agentic AI', desc: 'AI that executes multi-step workflows autonomously — vs. copilot AI that only assists', type: 'Concept', url: null },
+    { title: 'Systemic HR', desc: 'HR as integrated operation, not siloed COEs — Bersin foundational model', type: 'Framework', url: null },
+    { title: 'Superagent', desc: 'AI system stitching together multiple functional agents for end-to-end HR processes', type: 'Framework', url: null },
+    { title: 'Superworker', desc: 'Human + AI collaboration model — augmented individual performance', type: 'Framework', url: null },
+    { title: '5-Layer Agent Architecture', desc: 'Systems of record → workflow → agents → superagents → platforms', type: 'Framework', url: null },
+    { title: 'MCP', desc: 'Model Context Protocol — open standard for agent interoperability', type: 'Concept', url: null },
+    { title: 'Semantic Layer', desc: 'Company policies and rules that ground AI agent decisions — context engineering', type: 'Concept', url: null },
+    { title: 'HR 2030', desc: "Bersin's vision for fully agentic human resources systems", type: 'Framework', url: 'https://joshbersin.com/2026/04/introducing-hr-2030-a-vision-for-agentic-human-resources/' },
+    { title: 'Josh Bersin Company', desc: 'Definitive HR AI research source', type: 'Source', url: 'https://joshbersin.com' },
+    { title: 'Aptitude Research', desc: 'Boutique HR tech analyst — platform evaluations', type: 'Source', url: 'https://aptituderesearch.com' },
+    { title: 'HCM', desc: 'Human Capital Management — enterprise HR software category', type: 'Glossary', url: null },
+    { title: 'ATS', desc: 'Applicant Tracking System — recruiting workflow management', type: 'Glossary', url: null },
+    { title: 'LXP', desc: 'Learning Experience Platform — AI-personalized learning delivery', type: 'Glossary', url: null },
+    { title: 'RAG', desc: 'Retrieval Augmented Generation — grounds AI in company-specific data', type: 'Glossary', url: null },
+  ];
+
+  function runSearch(q) {
+    const el = document.getElementById('search-results');
+    if (!q || q.length < 2) { el.classList.remove('visible'); return; }
+    const lower = q.toLowerCase();
+    const hits = SEARCH_INDEX.filter(i =>
+      i.title.toLowerCase().includes(lower) ||
+      i.desc.toLowerCase().includes(lower) ||
+      i.type.toLowerCase().includes(lower)
+    ).slice(0, 8);
+    if (!hits.length) {
+      el.innerHTML = `<div class="search-empty">No results for "${q}"</div>`;
+    } else {
+      el.innerHTML = hits.map(h => `
+        <a class="sr-item" href="${h.url || '#'}" ${h.url ? 'target="_blank"' : ''}>
+          <span class="sr-type">${h.type}</span>
+          <div><div class="sr-title">${h.title}</div><div class="sr-desc">${h.desc}</div></div>
+        </a>`).join('');
+    }
+    el.classList.add('visible');
+  }
+
+  function closeSearch() { document.getElementById('search-results').classList.remove('visible'); }
+
+  /* ── RSS FEEDS ── */
+  const RSS_FEEDS = {
+    bersin:      { url: 'https://joshbersin.com/feed/', label: 'Josh Bersin' },
+    aptitude:    { url: 'https://aptituderesearch.com/feed/', label: 'Aptitude Research' },
+    workday:     { url: 'https://blog.workday.com/en-us/feeds/posts/default.rss', label: 'Workday Blog' },
+    servicenow:  { url: 'https://www.servicenow.com/blogs.rss', label: 'ServiceNow' },
+    hrdive_tech: { url: 'https://www.hrdive.com/feeds/news/', label: 'HR Dive' },
+    emerj:       { url: 'https://emerj.com/feed/', label: 'Emerj AI' },
+  };
+
+  function formatDate(d) {
+    if (!d) return '';
+    try { return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
+    catch(e) { return ''; }
+  }
+
+  async function fetchFeed(key, listId) {
+    const list = document.getElementById(listId);
+    if (!list) return;
+    list.innerHTML = '<div class="feed-loading">Loading headlines…</div>';
+    const feed = RSS_FEEDS[key];
+    const proxy = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&count=8`;
+    try {
+      const res = await fetch(proxy);
+      const data = await res.json();
+      if (data.status !== 'ok' || !data.items?.length) throw new Error('empty');
+      list.innerHTML = data.items.map(item => `
+        <a class="feed-item" href="${item.link}" target="_blank" rel="noopener noreferrer">
+          <span class="feed-item-source">${feed.label}</span>
+          <span class="feed-item-title">${item.title}</span>
+          <span class="feed-item-date">${formatDate(item.pubDate)}</span>
+        </a>`).join('');
+    } catch(e) {
+      const siteUrl = feed.url.split('/').slice(0,3).join('/');
+      list.innerHTML = `<div class="feed-error">Live feed unavailable — <a href="${siteUrl}" target="_blank" style="color:var(--accent);">visit ${feed.label} directly →</a></div>`;
+    }
+  }
+
+  function loadFeed(key, btn) {
+    document.querySelectorAll('#rss-panel .feed-tab').forEach(t => t.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    fetchFeed(key, 'feed-list');
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    fetchFeed('bersin', 'feed-list');
+  });
+</script>
+</body>
+</html>
