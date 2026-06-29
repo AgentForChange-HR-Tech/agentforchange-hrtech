@@ -201,6 +201,39 @@
     .card { box-shadow: none; }
   }
 
+
+  /* ── SIGNAL ALERT BANNER ── */
+  .signal-alert-banner {
+    display: none; /* Activated by SIGNAL_ALERT_ACTIVE = true in JS */
+    background: var(--coral-light, #fdecea);
+    border-bottom: 2px solid var(--coral, #c94f35);
+    padding: 0.75rem 2rem;
+    position: relative;
+    z-index: 99;
+  }
+  body.dark .signal-alert-banner {
+    background: rgba(201,79,53,0.12);
+  }
+  .signal-alert-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  }
+  .signal-alert-content {
+    display: flex; align-items: center; gap: 10px; flex: 1;
+  }
+  .signal-alert-dot {
+    font-size: 14px; flex-shrink: 0;
+  }
+  .signal-alert-text {
+    font-size: 13px; color: var(--coral, #c94f35); font-weight: 500; line-height: 1.4;
+  }
+  .signal-alert-link {
+    font-size: 12px; color: var(--coral, #c94f35); text-decoration: underline; white-space: nowrap; flex-shrink: 0;
+  }
+  .signal-alert-dismiss {
+    background: none; border: none; cursor: pointer; color: var(--coral, #c94f35);
+    font-size: 16px; padding: 0 4px; flex-shrink: 0;
+  }
   /* ── RESPONSIVE ── */
   @media (max-width: 640px) {
     .main { padding: 1rem; }
@@ -209,7 +242,112 @@
     .page-hero { padding: 2rem 1.25rem 1.75rem; }
     .header-inner { flex-wrap: wrap; }
   }
+
+  /* ── DESIGN REFRESH v2 — typography, contrast, mobile ── */
+  /* Increased font sizes for 35-60 age range readability */
+  .source-desc, .insight-desc, .platform-desc, .visa-desc, .trend-desc, .check-desc, .framework-desc {
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+    color: var(--ink-mid) !important;
+  }
+  .source-name, .insight-name, .platform-name, .visa-name, .trend-name, .check-title, .framework-name, .rhythm-what {
+    font-size: 14px !important;
+  }
+  .card-title, .feed-title, .stat-label, .hero-breadcrumb, .rhythm-when {
+    font-size: 12px !important;
+  }
+  .stat-sub, .feed-item-date, .feed-item-source, .feed-footer-note, .reviewed-notice {
+    font-size: 12px !important;
+    color: var(--ink-soft) !important;
+  }
+  .brief-text { font-size: 14px !important; }
+  .brief-link, .rhythm-row { line-height: 1.75 !important; }
+  .card { padding: 1.5rem 1.75rem !important; }
+  /* Mobile tap targets */
+  @media (max-width: 768px) {
+    .tab-btn { min-height: 44px !important; padding: 10px 14px !important; font-size: 13px !important; }
+    .feed-tab { min-height: 36px !important; padding: 8px 12px !important; }
+    .hdr-btn { min-height: 36px !important; }
+    .pill { min-height: 36px !important; padding: 8px 14px !important; }
+    .site-header { padding: 0 1rem !important; }
+    .header-title .subtitle { display: none !important; }
+    .tab-bar { overflow-x: auto !important; flex-wrap: nowrap !important; -webkit-overflow-scrolling: touch !important; padding-bottom: 5px !important; }
+    .tab-bar::-webkit-scrollbar { height: 2px !important; }
+    .page-hero { padding: 2rem 1.25rem 1.5rem !important; }
+    .page-hero h1 { font-size: clamp(1.75rem, 6vw, 2.5rem) !important; }
+    .main { padding: 1rem 1rem 2rem !important; }
+    .stat-strip { grid-template-columns: repeat(2, 1fr) !important; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr !important; }
+    .header-inner { padding: 0.75rem 0 !important; }
+    .urgency-items { display: none !important; }
+  }
+  @media (max-width: 480px) {
+    .hero-meta { gap: 6px !important; }
+    .meta-chip { font-size: 10px !important; padding: 3px 8px !important; }
+    .stat-val { font-size: 1.6rem !important; }
+  }
+
+  /* ── NEWSLETTER CTA ── */
+  .newsletter-cta {
+    display: flex;
+    align-items: center; justify-content: space-between;
+    gap: 1.5rem; flex-wrap: wrap;
+    background: var(--accent-light, #e8f0fb);
+    border: 1px solid rgba(0,102,204,0.2);
+    border-radius: var(--radius, 10px);
+    padding: 1.25rem 1.5rem; margin-top: 16px;
+  }
+  .cta-text h3 { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+  .cta-text p { font-size: 13px; color: var(--ink-soft); }
+  .cta-btn {
+    font-size: 13px; font-weight: 500; padding: 9px 22px;
+    border-radius: 22px; background: var(--accent, #0066cc); color: white;
+    text-decoration: none; white-space: nowrap; transition: all 0.15s;
+    border: none; cursor: pointer; flex-shrink: 0;
+  }
+  .cta-btn:hover { background: var(--accent-mid, #4d94e0); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,102,204,0.25); }
+  .footer-cta {
+    font-size: 13px; color: var(--ink-soft); text-align: center;
+    padding-top: 0.75rem; border-top: 1px solid var(--border); margin-top: 0.75rem;
+  }
+  .footer-cta a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  .footer-cta a:hover { text-decoration: underline; }
+  .meta-cta-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; padding: 4px 12px; border-radius: 12px;
+    background: rgba(255,255,255,0.15); color: #fff;
+    border: 1px solid rgba(255,255,255,0.3); text-decoration: none;
+    transition: background 0.15s;
+  }
+  .meta-cta-chip:hover { background: rgba(255,255,255,0.25); }
 </style>
+
+  <!-- Google Analytics 4 — replace G-MGQ5MSQM2W with your real GA4 Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQ5MSQM2W"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-MGQ5MSQM2W', {
+      page_title: document.title,
+      page_location: window.location.href
+    });
+    // Track tab clicks
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('tab-btn')) {
+        gtag('event', 'tab_click', {event_category: 'engagement', event_label: e.target.textContent.trim()});
+      }
+      if (e.target.id === 'share-btn' || e.target.closest('#share-btn')) {
+        gtag('event', 'share_click', {event_category: 'engagement', event_label: window.location.pathname});
+      }
+      if (e.target.classList.contains('feed-tab')) {
+        gtag('event', 'feed_tab_click', {event_category: 'engagement', event_label: e.target.textContent.trim()});
+      }
+      if (e.target.closest('.cta-btn') || e.target.classList.contains('cta-btn')) {
+        gtag('event', 'substack_cta_click', {event_category: 'conversion', event_label: window.location.pathname});
+      }
+    });
+  </script>
 </head>
 <body>
 
@@ -261,7 +399,7 @@
 <!-- MAIN -->
 <main class="main">
 
-  <div class="reviewed-notice">Content last reviewed: <span id="reviewed-date"></span></div>
+  <div class="reviewed-notice">Content last reviewed: <span id="reviewed-date">May 2026</span></div>
 
   <!-- STAT STRIP -->
   <div class="stat-strip">
@@ -312,6 +450,7 @@
     <button class="tab-btn" onclick="showTab('emerging', this)">Emerging Players</button>
     <button class="tab-btn" onclick="showTab('rhythm', this)">Monitoring Rhythm</button>
     <button class="tab-btn" onclick="showTab('leaders', this)">Key Voices</button>
+    <button class="tab-btn" onclick="showTab('tech-industry',this)">Tech Industry Context</button>
   </div>
 
   <!-- TAB: PLATFORM LANDSCAPE -->
@@ -1031,12 +1170,64 @@
     </div>
   </div>
 
+
+  <!-- TAB: TECH INDUSTRY CONTEXT -->
+  <div id="tech-industry" class="section">
+    <div class="grid-2">
+      <div>
+        <div class="card-title">Why tech companies face the most acute HR transformation pressure</div>
+        <div class="insight-card" style="--ic-color:var(--accent);">
+          <div class="insight-header"><div class="insight-name">The Specialized Talent War</div><span class="insight-badge b-core">Global Challenge</span></div>
+          <p class="insight-desc">Semiconductor, hardware, and AI infrastructure companies compete for some of the scarcest talent in the global economy. Chip design engineers take 5–7 years to fully develop. AI silicon architects are being recruited by every major technology company simultaneously. The talent supply is structurally limited against demand driven by the AI infrastructure boom — and the companies that win this talent war will win the next decade of technology leadership.</p>
+          <div class="insight-meta"><span class="insight-tag">5–7yr engineer development</span><span class="insight-tag">Global talent scarcity</span><span class="insight-tag">AI infrastructure demand</span></div>
+        </div>
+        <div class="insight-card" style="--ic-color:var(--teal);">
+          <div class="insight-header"><div class="insight-name">The Compensation Benchmark Effect</div><span class="insight-badge b-trend">Market Dynamic</span></div>
+          <p class="insight-desc">Nvidia's stock-driven compensation packages have created a global benchmark that most technology companies struggle to match on cash alone. This forces HR leaders to compete on total value proposition — culture, mission, growth trajectory, flexibility, and non-cash benefits — rather than pure compensation. AI-powered compensation modeling and market intelligence tools are becoming critical infrastructure for any tech company's talent retention strategy.</p>
+          <div class="insight-meta"><span class="insight-tag">Nvidia benchmark effect</span><span class="insight-tag">Total value proposition</span><span class="insight-tag">Comp modeling critical</span></div>
+        </div>
+        <div class="insight-card" style="--ic-color:var(--green);">
+          <div class="insight-header"><div class="insight-name">Skills Evolution Speed</div><span class="insight-badge b-watch">L&amp;D Priority</span></div>
+          <p class="insight-desc">AI silicon, PCIe 6.0, next-gen networking protocols, and custom ASIC design require constant upskilling. L&D programs built for stable skill sets are structurally inadequate for hardware engineering environments where the technology landscape shifts every 18–24 months. Skills intelligence infrastructure — tracking what skills exist internally, what skills the market demands, and how fast skills are being acquired — is a competitive requirement, not a nice-to-have.</p>
+          <div class="insight-meta"><span class="insight-tag">18–24mo skill cycles</span><span class="insight-tag">Internal skills mapping</span><span class="insight-tag">Acquisition velocity</span></div>
+        </div>
+        <div class="insight-card" style="--ic-color:var(--amber);">
+          <div class="insight-header"><div class="insight-name">Immigration Complexity at Scale</div><span class="insight-badge b-framework">Operational Reality</span></div>
+          <p class="insight-desc">Technology companies — particularly those in semiconductor and hardware — have among the highest concentrations of H-1B sponsored employees in the US workforce. The $100K supplemental fee, wage-weighted lottery, and EAD auto-extension elimination create material financial and operational risks that HR must model into workforce planning. Immigration is not an administrative function in tech — it is a strategic talent pipeline management challenge.</p>
+          <div class="insight-meta"><span class="insight-tag">High H-1B concentration</span><span class="insight-tag">$100K fee impact</span><span class="insight-tag">Strategic pipeline risk</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-title">Platforms built for engineering-heavy organizations</div>
+          <div class="source-row"><div class="source-icon" style="background:var(--accent-light);">☁️</div><div class="source-info"><div class="source-name"><a href="https://www.workday.com" target="_blank">Workday HCM</a></div><div class="source-desc">Enterprise-grade, strong AI agent roadmap — fits complex engineering org structures and global operations</div></div></div>
+          <div class="source-row"><div class="source-icon" style="background:var(--green-light);">⚙️</div><div class="source-info"><div class="source-name"><a href="https://www.servicenow.com/products/hrsd.html" target="_blank">ServiceNow HRSD</a></div><div class="source-desc">HR service delivery + agentic workflows — integrates naturally with IT operations in tech environments</div></div></div>
+          <div class="source-row"><div class="source-icon" style="background:var(--coral-light);">🎯</div><div class="source-info"><div class="source-name"><a href="https://hiredscore.com" target="_blank">HiredScore (Workday)</a></div><div class="source-desc">AI-powered talent acquisition — strong for specialized technical roles where screening quality is critical</div></div></div>
+          <div class="source-row"><div class="source-icon" style="background:var(--teal-light);">🧠</div><div class="source-info"><div class="source-name"><a href="https://eightfold.ai" target="_blank">Eightfold AI</a></div><div class="source-desc">Skills matching and talent intelligence — critical for identifying transferable skills in engineering talent</div></div></div>
+          <div class="source-row"><div class="source-icon" style="background:var(--amber-light);">🔮</div><div class="source-info"><div class="source-name"><a href="https://gloat.com" target="_blank">Gloat</a></div><div class="source-desc">Skills intelligence and talent marketplace — internal mobility for specialized engineering teams</div></div></div>
+          <div class="source-row"><div class="source-icon" style="background:var(--violet-light);">📊</div><div class="source-info"><div class="source-name"><a href="https://www.draup.com" target="_blank">Draup</a></div><div class="source-desc">Competitive talent intelligence — monitor hiring patterns at competitor tech companies globally</div></div></div>
+        </div>
+        <div class="card">
+          <div class="card-title">The HR opportunity in tech</div>
+          <div class="rhythm-row"><div class="rhythm-when">Now</div><div class="rhythm-body"><div class="rhythm-what" style="font-weight:500;">AI as the equalizer</div><div class="rhythm-src">Companies that operationalize AI-driven talent intelligence first will win the talent war. HR has a rare chance to lead this transformation — not follow it.</div></div></div>
+          <div class="rhythm-row"><div class="rhythm-when">Recruiting</div><div class="rhythm-body"><div class="rhythm-what" style="font-weight:500;">AI agents for specialized sourcing</div><div class="rhythm-src">Sourcing agents can identify candidates with niche hardware skills at scale — reducing time-to-hire for roles that historically took 6+ months to fill.</div></div></div>
+          <div class="rhythm-row"><div class="rhythm-when">Retention</div><div class="rhythm-body"><div class="rhythm-what" style="font-weight:500;">Predictive flight risk modeling</div><div class="rhythm-src">Identifying at-risk engineers 3–6 months before resignation is worth hundreds of thousands per prevented departure in specialized roles.</div></div></div>
+          <div class="rhythm-row"><div class="rhythm-when">Onboarding</div><div class="rhythm-body"><div class="rhythm-what" style="font-weight:500;">Faster time-to-productivity</div><div class="rhythm-src">Superagents reduce onboarding complexity in technical environments — provisioning, training, team integration — from weeks to days.</div></div></div>
+          <div class="rhythm-row" style="border-bottom:none;"><div class="rhythm-when">Planning</div><div class="rhythm-body"><div class="rhythm-what" style="font-weight:500;">Workforce intelligence as strategy</div><div class="rhythm-src">Monitoring competitor hiring patterns surfaces market signals 6–12 months before they show up in financial results. That lead time is the advantage.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="newsletter-cta">
+      <div class="cta-text"><h3>Tech industry HR intelligence, weekly</h3><p>The Signal HR covers the platforms, regulations, and workforce dynamics shaping talent strategy in technology companies globally.</p></div>
+      <a href="https://thesignalhr.substack.com/" class="cta-btn" target="_blank">Subscribe free →</a>
+    </div>
+  </div>
 </main>
 
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-left">The Signal · HR Tech &amp; Agentic AI · <span id="footer-date"></span></div>
+    <div class="footer-left">The Signal · HR Tech &amp; Agentic AI · <span id="footer-date"></span> &middot; &copy; 2026 The Signal HR &middot; Alex Rivera. Content may be shared with attribution.</div>
     <div class="footer-right">
       <a href="https://agentforchange-hr-tech.github.io/the-signal" class="footer-link">← Back to The Signal</a>
       <a href="https://agentforchange-hr-tech.github.io/agentforchange-risk/" class="footer-link">Risk &amp; Compliance →</a>
@@ -1054,7 +1245,7 @@
   document.getElementById('live-date').textContent = 'Updated ' + full;
   document.getElementById('footer-date').textContent = full;
   document.getElementById('hero-date').textContent = short;
-  document.getElementById('reviewed-date').textContent = short;
+  document.getElementById('reviewed-date') && (document.getElementById('reviewed-date').textContent = 'May 2026');
 
   /* ── DARK MODE ── */
   function toggleDark() {
